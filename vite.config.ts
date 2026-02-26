@@ -1,23 +1,18 @@
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => {
-  // Charger les variables d'environnement
   const env = loadEnv(mode, '.', '');
 
   return {
-    plugins: [
-      react(),
-      tailwindcss(),
-    ],
+    plugins: [react(), tailwindcss()],
 
-    // ✅ Base path correct pour Static Site Render
+    // Base pour Render
     base: '/',
 
     define: {
-      // ⚠️ Les clés API publiques seront visibles dans le navigateur
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },
 
@@ -25,11 +20,6 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': path.resolve(__dirname, '.'),
       },
-    },
-
-    server: {
-      // HMR (Hot Module Replacement)
-      hmr: process.env.DISABLE_HMR !== 'true',
     },
   };
 });
