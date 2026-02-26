@@ -5,21 +5,18 @@ import {
   CheckCircle2, 
   ArrowLeft, 
   Info,
-  Clock,
-  XCircle
+  Clock
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function QuoteRequest() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [existingStatus, setExistingStatus] = useState<string | null>(null);
   const [checkingStatus, setCheckingStatus] = useState(true);
 
-  // ✅ Désactivé fetch pour Render Static Site
+  // ❌ Plus de fetch, juste un mock
   useEffect(() => {
     setCheckingStatus(false);
-    setExistingStatus(null);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,12 +26,12 @@ export default function QuoteRequest() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
 
-    // ✅ Simule l'envoi sur Render
+    // 🔹 Simulation de l'envoi
     setTimeout(() => {
       localStorage.setItem('diantesites_user_email', email);
       setSubmitted(true);
       setLoading(false);
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
     }, 1000);
   };
 
@@ -42,40 +39,6 @@ export default function QuoteRequest() {
     return (
       <div className="min-h-screen pt-32 flex items-center justify-center bg-slate-50">
         <div className="w-10 h-10 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
-  if (existingStatus && !submitted) {
-    return (
-      <div className="min-h-screen pt-32 pb-20 bg-slate-50 flex items-center justify-center px-4">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white p-10 rounded-3xl shadow-xl border border-slate-100 text-center"
-        >
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-amber-100 text-amber-600">
-            <Clock size={40} />
-          </div>
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Demande en cours</h2>
-          <p className="text-slate-600 mb-8">
-            Votre demande est en cours d'analyse. Nous vous répondrons très prochainement.
-          </p>
-          <div className="flex flex-col gap-4">
-            <Link to="/" className="text-emerald-600 font-bold hover:underline">
-              Retour à l'accueil
-            </Link>
-            <button 
-              onClick={() => {
-                localStorage.removeItem('diantesites_user_email');
-                setExistingStatus(null);
-              }}
-              className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              Faire une nouvelle demande avec un autre email
-            </button>
-          </div>
-        </motion.div>
       </div>
     );
   }
@@ -107,8 +70,6 @@ export default function QuoteRequest() {
     <div className="min-h-screen pt-32 pb-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
-          {/* Form Side */}
           <div className="lg:col-span-2">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -146,7 +107,6 @@ export default function QuoteRequest() {
               </form>
             </motion.div>
           </div>
-
         </div>
       </div>
     </div>
