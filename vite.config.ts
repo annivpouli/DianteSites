@@ -4,6 +4,7 @@ import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
+  // Charger les variables d'environnement
   const env = loadEnv(mode, '.', '');
 
   return {
@@ -12,10 +13,11 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
     ],
 
-    // ✅ IMPORTANT pour Render Static Site
+    // ✅ Base path correct pour Static Site Render
     base: '/',
 
     define: {
+      // ⚠️ Les clés API publiques seront visibles dans le navigateur
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },
 
@@ -26,7 +28,7 @@ export default defineConfig(({ mode }) => {
     },
 
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
+      // HMR (Hot Module Replacement)
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };
